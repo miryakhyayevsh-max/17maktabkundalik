@@ -14,7 +14,7 @@
         </select>
 
         <label>Дата</label>
-        <input type="date" name="date" required>
+        <input type="date" name="lesson_date">
 
         <label>Статус</label>
         <select name="status" required>
@@ -24,14 +24,13 @@
             <option value="П">П — По уважительной причине</option>
         </select>
 
-        <button type="submit">Сохранить</button>
+        <button type="submit">Сохранить посещаемость</button>
     </form>
     {% endif %}
 </div>
 
 <div class="card">
     <h2>Журнал посещаемости</h2>
-
     <table>
         <tr>
             <th>Ученик</th>
@@ -39,16 +38,14 @@
             <th>Статус</th>
         </tr>
 
-        {% for item in attendance %}
+        {% for item in items %}
         <tr>
             <td>{{ item.student.full_name }}</td>
-            <td>{{ item.date }}</td>
+            <td>{{ item.lesson_date.strftime('%d.%m.%Y') }}</td>
             <td>{{ item.status }}</td>
         </tr>
         {% else %}
-        <tr>
-            <td colspan="3">Записей пока нет.</td>
-        </tr>
+        <tr><td colspan="3">Записей пока нет.</td></tr>
         {% endfor %}
     </table>
 </div>
