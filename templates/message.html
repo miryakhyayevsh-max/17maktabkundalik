@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>{{ title or 'Сообщение' }}</h2>
+    <p>{{ message }}</p>
+    <a href="/">Вернуться на главную</a>
+</div>
+{% endblock %}
