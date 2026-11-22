@@ -1,33 +1,40 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="card">
     <h2>Управление пользователями</h2>
-    <p>Создание и управление учётными записями учеников, учителей и администрации.</p>
 
     <form method="POST">
         <label>ФИО</label>
-        <input type="text" name="full_name" placeholder="Введите ФИО" required>
+        <input name="full_name" required>
 
         <label>Логин</label>
-        <input type="text" name="username" placeholder="Введите логин" required>
+        <input name="username" required>
 
-        <label>Пароль</label>
-        <input type="password" name="password" placeholder="Временный пароль" required>
+        <label>Временный пароль (минимум 10 символов)</label>
+        <input type="password" name="password" minlength="10" required>
 
         <label>Роль</label>
         <select name="role" required>
-            <option value="student">Ученик</option>
-            <option value="parent">Родитель</option>
-            <option value="teacher">Учитель</option>
-            <option value="class_teacher">Классный руководитель</option>
-            <option value="admin">Администратор</option>
-            <option value="director">Директор</option>
-            <option value="deputy">Завуч</option>
-            <option value="psychologist">Психолог</option>
+            <option>Ученик</option>
+            <option>Родитель</option>
+            <option>Учитель</option>
+            <option>Классный руководитель</option>
+            <option>Главный администратор</option>
+            <option>Заместитель директора</option>
+            <option>Директор</option>
+            <option>Психолог</option>
         </select>
 
         <button type="submit">Создать пользователя</button>
     </form>
+</div>
+
+<div class="card">
+    <h2>Список пользователей</h2>
+    {% for user in users %}
+        <p>{{ user.full_name }} — {{ user.role }} ({{ user.username }})</p>
+    {% else %}
+        <p>Пользователей пока нет.</p>
+    {% endfor %}
 </div>
 {% endblock %}
