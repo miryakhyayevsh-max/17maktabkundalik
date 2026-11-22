@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Управление пользователями</h2>
+    <p>Создание и управление учётными записями учеников, учителей и администрации.</p>
+
+    <form method="POST">
+        <label>ФИО</label>
+        <input type="text" name="full_name" placeholder="Введите ФИО" required>
+
+        <label>Логин</label>
+        <input type="text" name="username" placeholder="Введите логин" required>
+
+        <label>Пароль</label>
+        <input type="password" name="password" placeholder="Временный пароль" required>
+
+        <label>Роль</label>
+        <select name="role" required>
+            <option value="student">Ученик</option>
+            <option value="parent">Родитель</option>
+            <option value="teacher">Учитель</option>
+            <option value="class_teacher">Классный руководитель</option>
+            <option value="admin">Администратор</option>
+            <option value="director">Директор</option>
+            <option value="deputy">Завуч</option>
+            <option value="psychologist">Психолог</option>
+        </select>
+
+        <button type="submit">Создать пользователя</button>
+    </form>
+</div>
+{% endblock %}
