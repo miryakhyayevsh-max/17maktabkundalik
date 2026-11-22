@@ -339,5 +339,19 @@ def create_admin():
 with app.app_context():
     db.create_all()
 
+    admin_username = os.environ.get("ADMIN_USERNAME")
+    admin_password = os.environ.get("ADMIN_PASSWORD")
+
+    if admin_username and admin_password and len(admin_password) >= 10:
+        if not User.query.filter_by(username=admin_username).first():
+            admin = User(
+                username=admin_username,
+                full_name=os.environ.get("ADMIN_FULL_NAME", "Главный администратор"),
+                role="Главный администратор",
+                must_change_password=True
+            )
+            admin.set_password(admin_password)
+            db.session.add(admin)
+            db.session.commit()
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
