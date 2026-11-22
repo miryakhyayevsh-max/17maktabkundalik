@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Домашние задания</h2>
+
+    {% if can_add %}
+    <form method="POST">
+        <label>Класс</label>
+        <input type="text" name="class_name" placeholder="Например, 7 Г" required>
+
+        <label>Предмет</label>
+        <select name="subject_id" required>
+            {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Задание</label>
+        <textarea name="description" placeholder="Опишите домашнее задание" required></textarea>
+
+        <label>Срок выполнения</label>
+        <input type="date" name="due_date">
+
+        <button type="submit">Опубликовать задание</button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Опубликованные задания</h2>
+
+    {% for item in homework %}
+    <div class="card">
+        <h3>{{ item.subject.name }} — {{ item.class_name }}</h3>
+        <p>{{ item.description }}</p>
+        <p>Срок: {{ item.due_date or 'Не указан' }}</p>
+        <p>Учитель: {{ item.teacher.full_name }}</p>
+    </div>
+    {% else %}
+    <p>Домашних заданий пока нет.</p>
+    {% endfor %}
+</div>
+{% endblock %}
