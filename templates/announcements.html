@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Объявления школы</h2>
+
+    {% if current_user.is_admin %}
+    <form method="POST">
+        <label>Заголовок</label>
+        <input type="text" name="title" placeholder="Название объявления" required>
+
+        <label>Текст объявления</label>
+        <textarea name="body" placeholder="Введите текст объявления" required></textarea>
+
+        <button type="submit">Опубликовать</button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    {% for item in announcements %}
+    <div class="card">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.body }}</p>
+        <small>{{ item.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
+        <p>Автор: {{ item.author.full_name }}</p>
+    </div>
+    {% else %}
+    <p>Объявлений пока нет.</p>
+    {% endfor %}
+</div>
+{% endblock %}
