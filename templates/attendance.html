@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Посещаемость учеников</h2>
+
+    {% if can_add %}
+    <form method="POST">
+        <label>Ученик</label>
+        <select name="student_id" required>
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.full_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Дата</label>
+        <input type="date" name="date" required>
+
+        <label>Статус</label>
+        <select name="status" required>
+            <option value="Н">Н — Не был</option>
+            <option value="О">О — Опоздал</option>
+            <option value="Б">Б — Болел</option>
+            <option value="П">П — По уважительной причине</option>
+        </select>
+
+        <button type="submit">Сохранить</button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Журнал посещаемости</h2>
+
+    <table>
+        <tr>
+            <th>Ученик</th>
+            <th>Дата</th>
+            <th>Статус</th>
+        </tr>
+
+        {% for item in attendance %}
+        <tr>
+            <td>{{ item.student.full_name }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.status }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">Записей пока нет.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
