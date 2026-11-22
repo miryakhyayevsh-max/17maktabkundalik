@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Расписание уроков</h2>
+
+    {% if can_add %}
+    <form method="POST">
+        <label>Класс</label>
+        <input type="text" name="class_name" placeholder="Например, 7 Г" required>
+
+        <label>День недели</label>
+        <select name="day" required>
+            <option>Понедельник</option>
+            <option>Вторник</option>
+            <option>Среда</option>
+            <option>Четверг</option>
+            <option>Пятница</option>
+            <option>Суббота</option>
+        </select>
+
+        <label>Номер урока</label>
+        <input type="number" name="lesson_number" min="1" max="10" required>
+
+        <label>Предмет</label>
+        <select name="subject_id" required>
+            {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Кабинет</label>
+        <input type="text" name="room" placeholder="Например, 204">
+
+        <button type="submit">Добавить урок</button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Все уроки</h2>
+    <table>
+        <tr>
+            <th>Класс</th>
+            <th>День</th>
+            <th>Урок</th>
+            <th>Предмет</th>
+            <th>Кабинет</th>
+        </tr>
+
+        {% for item in schedule %}
+        <tr>
+            <td>{{ item.class_name }}</td>
+            <td>{{ item.day }}</td>
+            <td>{{ item.lesson_number }}</td>
+            <td>{{ item.subject.name }}</td>
+            <td>{{ item.room or '—' }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">Расписание пока не добавлено.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
