@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Электронный журнал — оценки</h2>
+
+    {% if can_add %}
+    <form method="POST">
+        <label>Ученик</label>
+        <select name="student_id" required>
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.full_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Предмет</label>
+        <select name="subject_id" required>
+            {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Оценка (от 1 до 10)</label>
+        <input type="number" name="value" min="1" max="10" required>
+
+        <label>Тип работы</label>
+        <select name="kind">
+            <option>Оценка</option>
+            <option>СОР</option>
+            <option>СОЧ</option>
+        </select>
+
+        <label>Комментарий</label>
+        <input type="text" name="note">
+
+        <button type="submit">Сохранить оценку</button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Список оценок</h2>
+    <table>
+        <tr>
+            <th>Ученик</th>
+            <th>Предмет</th>
+            <th>Оценка</th>
+            <th>Тип</th>
+            <th>Дата</th>
+        </tr>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.student.full_name }}</td>
+            <td>{{ grade.subject.name }}</td>
+            <td>{{ grade.value }}/10</td>
+            <td>{{ grade.kind }}</td>
+            <td>{{ grade.created_at.strftime('%d.%m.%Y') }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">Оценок пока нет.</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
