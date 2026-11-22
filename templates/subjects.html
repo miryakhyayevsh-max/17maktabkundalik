@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Учебные предметы</h2>
+
+    <form method="POST">
+        <label>Название предмета</label>
+        <input type="text" name="name" placeholder="Например, Математика" required>
+
+        <button type="submit">Добавить предмет</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Список предметов</h2>
+    {% for subject in subjects %}
+        <p>{{ subject.name }}</p>
+    {% else %}
+        <p>Предметов пока нет.</p>
+    {% endfor %}
+</div>
+{% endblock %}
