@@ -4,13 +4,13 @@
 <div class="card">
     <h2>Расписание уроков</h2>
 
-    {% if can_add %}
+    {% if current_user.is_admin %}
     <form method="POST">
         <label>Класс</label>
-        <input type="text" name="class_name" placeholder="Например, 7 Г" required>
+        <input type="text" name="class_name" required>
 
         <label>День недели</label>
-        <select name="day" required>
+        <select name="weekday">
             <option>Понедельник</option>
             <option>Вторник</option>
             <option>Среда</option>
@@ -30,7 +30,7 @@
         </select>
 
         <label>Кабинет</label>
-        <input type="text" name="room" placeholder="Например, 204">
+        <input type="text" name="room">
 
         <button type="submit">Добавить урок</button>
     </form>
@@ -38,7 +38,7 @@
 </div>
 
 <div class="card">
-    <h2>Все уроки</h2>
+    <h2>Расписание</h2>
     <table>
         <tr>
             <th>Класс</th>
@@ -48,18 +48,16 @@
             <th>Кабинет</th>
         </tr>
 
-        {% for item in schedule %}
+        {% for item in lessons %}
         <tr>
             <td>{{ item.class_name }}</td>
-            <td>{{ item.day }}</td>
+            <td>{{ item.weekday }}</td>
             <td>{{ item.lesson_number }}</td>
             <td>{{ item.subject.name }}</td>
-            <td>{{ item.room or '—' }}</td>
+            <td>{{ item.room }}</td>
         </tr>
         {% else %}
-        <tr>
-            <td colspan="5">Расписание пока не добавлено.</td>
-        </tr>
+        <tr><td colspan="5">Расписание пока пустое.</td></tr>
         {% endfor %}
     </table>
 </div>
